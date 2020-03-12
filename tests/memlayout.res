@@ -1,7 +1,7 @@
 # **********************************************************
-# Copyright (c) 2015-2020 Google, Inc.  All rights reserved.
+# Copyright (c) 2020 Google, Inc.  All rights reserved.
 # **********************************************************
-
+#
 # Dr. Memory: the memory debugger
 #
 # This library is free software; you can redistribute it and/or
@@ -17,6 +17,24 @@
 # You should have received a copy of the GNU Lesser General Public
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
-# i#1418: We are updated to the new scheme.
-cmake_policy(SET CMP0022 NEW)
+#
+{
+  "heap objects": [
+    {
+      "address": "",
+%if X32
+      "size": "12",
+%endif
+%if X64
+      "size": "24",
+%endif
+      "contents": [
+        {
+          "address": "",
+          "value": "",
+          "points-to-type": "heap",
+          "points-to-base": "",
+          "points-to-offset": ""
+        },
+# We just make sure we have a stack section.
+  "thread stacks": [

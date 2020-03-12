@@ -1,5 +1,5 @@
 # **********************************************************
-# Copyright (c) 2010-2019 Google, Inc.    All rights reserved.
+# Copyright (c) 2010-2020 Google, Inc.    All rights reserved.
 # Copyright (c) 2009-2010 VMware, Inc.    All rights reserved.
 # **********************************************************
 
@@ -29,7 +29,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 # DAMAGE.
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.7)
 
 include(${PROJECT_SOURCE_DIR}/make/policies.cmake NO_POLICY_SCOPE)
 
@@ -79,8 +79,8 @@ if (UNIX)
   # to avoid conflicts with new declaration with "C" linkage in utils.h
   append_property_string(TARGET drltracelib COMPILE_FLAGS "-DNOLINK_STRCASESTR")
 endif()
-if ("${CMAKE_GENERATOR}" MATCHES "Visual Studio")
-  # i#1805: see comment in drstrace/CMakeLists.txt
+if (WIN32)
+  # i#1805: see comment in drstrace/CMakeLists.txt.  For VS2017 avoid _isdigit.
   append_property_string(TARGET drltracelib LINK_FLAGS "/force:multiple")
 endif ()
 
@@ -119,6 +119,7 @@ fix_win32_flags(drltrace_frontend.cpp)
 add_executable(drltrace ${front_srcs})
 
 configure_DynamoRIO_standalone(drltrace)
+use_DynamoRIO_extension(drltrace droption)
 
 target_link_libraries(drltrace drinjectlib drconfiglib drfrontendlib drsyscall_static)
 
